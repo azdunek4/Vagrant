@@ -1,0 +1,18 @@
+---
+- name: 
+  hosts: all # uruchomienie na wszystkich hostach
+  become: true # elewacja uprawnien
+  vars: # zmienne do przekazania w tasks
+    git_repository: "https://github.com/Panda-Academy-Core-2-0/Ansible_roles.git"
+    git_branch: "main" # domyslna galaz
+  tasks:
+    - name: Create a directory if it does not exist
+      file:
+        path: /etc/ansible/roles
+        state: directory
+        mode: '0755'
+    - name: Git checkout
+      git:
+        repo: "{{ git_repository }}"
+        dest: "/etc/ansible/roles" # docelowa sciezka
+        version: "{{ git_branch }}"
